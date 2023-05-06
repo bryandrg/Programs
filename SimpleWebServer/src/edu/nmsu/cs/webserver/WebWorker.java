@@ -21,6 +21,8 @@ package edu.nmsu.cs.webserver;
 
 import java.io.*;
 import java.net.Socket;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Scanner;
@@ -100,21 +102,25 @@ public class WebWorker implements Runnable {
 	 **/
 	private void writeHTTPHeader(OutputStream os, String contentType) throws Exception {
 		Date d = new Date();
-		DateFormat df = DateFormat.getDateTimeInstance();
-		df.setTimeZone(TimeZone.getTimeZone("GMT"));
-		os.write("HTTP/1.1 200 OK\n".getBytes());
-		os.write("Date: ".getBytes());
-		os.write((df.format(d)).getBytes());
-		os.write("\n".getBytes());
-		os.write("Server: Jon's very own server\n".getBytes());
-		// os.write("Last-Modified: Wed, 08 Jan 2003 23:11:55 GMT\n".getBytes());
-		// os.write("Content-Length: 438\n".getBytes());
-		os.write("Connection: close\n".getBytes());
-		os.write("Content-Type: ".getBytes());
-		os.write(contentType.getBytes());
-		os.write("\n\n".getBytes()); // HTTP header ends with 2 newlines
-		return;
-	}
+      	DateFormat df = DateFormat.getDateTimeInstance();
+      	df.setTimeZone(TimeZone.getTimeZone("GMT-6"));
+		if(Files.exists(Paths.get(filePath)) || (filePath=="")) {
+			os.write("HTTPS/1.1 200 OK\n".getBytes());
+		}
+		else {
+        os.write("HTTP/1.1 404 Error: Not Found\n".getBytes());
+		}
+      	os.write("Date: ".getBytes());
+     	os.write((df.format(d)).getBytes());
+      	os.write("\n".getBytes());
+      	os.write("Server: Bryan's server\n".getBytes());
+      	os.write("Connection: close\n".getBytes());
+      	os.write("Content-Type: ".getBytes());
+      	os.write(contentType.getBytes());
+		
+      	os.write("\n\n".getBytes()); // HTTP header ends with 2 newlines
+      	return;
+   }
 
 	/**
 	 * Write the data content to the client network connection. This MUST be done after the HTTP
