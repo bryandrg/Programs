@@ -1,0 +1,24 @@
+<project name="SimpleWebServer" default="compile">
+
+    <!-- Set properties -->
+    <property name="src.dir" value="src"/>
+    <property name="build.dir" value="bin"/>
+    <property name="main.class" value="edu.nmsu.cs.webserver.WebServer"/>
+    <!-- Compile Java source files -->
+    <target name="compile">
+        <mkdir dir="${build.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${build.dir}"/>
+    </target>
+    <!-- Run the Simple Web Server -->
+    <target name="run" depends="compile">
+        <java classname="${main.class}" fork="true">
+            <classpath>
+                <pathelement location="${build.dir}"/>
+            </classpath>
+        </java>
+    </target>
+    <!-- Clean build files -->
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+</project>

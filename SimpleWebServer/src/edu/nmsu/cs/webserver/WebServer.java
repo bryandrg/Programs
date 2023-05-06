@@ -12,14 +12,12 @@ package edu.nmsu.cs.webserver;
  * client connections. See the WebWorker source for more information about it.
  * 
  **/
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.*;
 
 public class WebServer
 {
-	private ServerSocket	socket;
-
-	private boolean				running;
+	private ServerSocket socket;
+	private boolean	running;
 
 	/**
 	 * Constructor
