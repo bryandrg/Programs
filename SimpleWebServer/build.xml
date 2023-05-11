@@ -1,4 +1,4 @@
-<project name="SimpleWebServer" default="compile">
+<project name="SimpleWebServer" default="all">
 
     <!-- Set properties -->
     <property name="src.dir" value="src"/>
@@ -11,7 +11,7 @@
     </target>
     <!-- Run the Simple Web Server -->
     <target name="run" depends="compile">
-        <java classname="${main.class}" fork="true">
+        <java classname="${main.class}" fork="true" dir="./www">
             <classpath>
                 <pathelement location="${build.dir}"/>
             </classpath>
@@ -21,4 +21,7 @@
     <target name="clean">
         <delete dir="${build.dir}"/>
     </target>
+    
+    <!-- Clean, compile, and run SimpleWebServer -->
+    <target name="all" depends="clean,compile,run"/>
 </project>
